@@ -49,18 +49,21 @@ object Builds extends sbt.Build {
   lazy val tagsoup = module("tagsoup")
     .dependsOn(core)
     .dependsOn(core % "test->test")
-    
+
   lazy val xmlDependency = libraryDependencies <<= (libraryDependencies, scalaVersion){
     (dependencies, scalaVersion) =>
       if(scalaVersion.startsWith("2.11"))
-        ("org.scala-lang.modules" %% "scala-xml" % "1.0.5") +: dependencies
+        ("org.scala-lang.modules" %% "scala-xml" % "1.0.6") +: dependencies
       else
         dependencies
     }
 
   /** Util module for using unfiltered with scalacheck */
   lazy val ufcheck = Project(
-    "ufcheck", file("ufcheck"), settings =
-      Defaults.defaultSettings ++ Seq(scalaVersion := Common.defaultScalaVersion)
+    "ufcheck", file("ufcheck")
+  ).settings(
+    scalaVersion := Common.defaultScalaVersion
   )
+
+  scalacOptions ++= Seq( "-unchecked", "-deprecation" )
 }

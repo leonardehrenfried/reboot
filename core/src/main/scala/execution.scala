@@ -47,7 +47,7 @@ trait HttpExecutor { self =>
     lfut.addListener(
       () => promise.complete(Try(lfut.get())),
       new juc.Executor {
-        def execute(runnable: Runnable) {
+        def execute(runnable: Runnable) = {
           executor.execute(runnable)
         }
       }
@@ -55,7 +55,7 @@ trait HttpExecutor { self =>
     promise.future
   }
 
-  def shutdown() {
+  def shutdown() = {
     client.close()
   }
 }
