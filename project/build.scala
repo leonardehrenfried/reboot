@@ -52,10 +52,7 @@ object Builds extends sbt.Build {
 
   lazy val xmlDependency = libraryDependencies <<= (libraryDependencies, scalaVersion){
     (dependencies, scalaVersion) =>
-      if(scalaVersion.startsWith("2.11"))
         ("org.scala-lang.modules" %% "scala-xml" % "1.0.6") +: dependencies
-      else
-        dependencies
     }
 
   /** Util module for using unfiltered with scalacheck */
